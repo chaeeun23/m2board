@@ -10,7 +10,7 @@ import java.util.List;
 import vo.Board;
 
 public class BoardDao implements IBoardDao {
-
+	//리스트
 	@Override
 	public List<Board> selectBoardListByPage(Connection conn, int rowPerPage, int beginRow) throws Exception {
 		List<Board> list = new ArrayList<Board>();
@@ -26,10 +26,6 @@ public class BoardDao implements IBoardDao {
 				Board board = new Board();
 				board.setBoardNo(rs.getInt("boardNo"));
 				board.setTitle(rs.getString("title"));
-				board.setWriter(rs.getString("writer"));
-				board.setCreateDate(rs.getString("createDate"));
-				board.setViews(rs.getInt("views"));
-				board.setNice(rs.getInt("nice"));
 				list.add(board);	
 			}
 		}finally {
@@ -43,7 +39,7 @@ public class BoardDao implements IBoardDao {
 		
 		return list;
 	}
-
+	//페이징
 	@Override
 	public int selectBoardCnt(Connection conn, int rowPerPage) throws Exception {
 		int totalCount =0;
@@ -65,6 +61,39 @@ public class BoardDao implements IBoardDao {
 			}
 		}
 		return totalCount;
+	}
+	
+	//상세보기
+	@Override
+	public List<Board> selectBoardOne(Connection conn, int boardNo) throws Exception {
+		List<Board> list = new ArrayList<Board>();
+		String sql = BoardQuery.SECLET_BOARD_ONE;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt=conn.prepareStatement(sql);
+			stmt.setInt(1,boardNo);
+			rs=stmt.executeQuery();
+			while(rs.next()) {
+				Board board = new Board();
+				board.setBoardNo(rs.getInt("boardNo"));
+				board.setTitle(rs.getString("title"));
+				board.setWriter(rs.getString("writer"));
+				board.setCreateDate(rs.getString("createDate"));
+				board.setViews(rs.getInt("views"));
+				board.setNice(rs.getInt("nice"));
+				list.add(board);	
+			}
+		}finally {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(stmt!=null) {
+				stmt.close();
+			}
+		}
+		
+		return null;
 	}
 
 }

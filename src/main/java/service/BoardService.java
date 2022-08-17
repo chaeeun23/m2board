@@ -15,6 +15,7 @@ import vo.Board;
 public class BoardService implements IBoardService {
 	private IBoardDao boardDao;
 
+	// 리스트
 	@Override
 	public Map<String, Object> getBoardList(int rowPerPage, int currentPage) {
 		Map<String, Object> map = new HashMap<>();
@@ -27,7 +28,7 @@ public class BoardService implements IBoardService {
 			conn.setAutoCommit(false);
 
 			// 페이징
-			int totalCount = boardDao.selectBoardCnt(conn,rowPerPage);
+			int totalCount = boardDao.selectBoardCnt(conn, rowPerPage);
 			int beginRow = (currentPage - 1) * rowPerPage;
 			if (totalCount == 0) {
 				throw new Exception();
@@ -62,5 +63,37 @@ public class BoardService implements IBoardService {
 		}
 
 		return map;
+	}
+	//상세보기
+	@Override
+	public List<Board> getBoardOne(int boardNo) {
+		List<Board> list = new ArrayList<Board>();
+		Connection conn = null;
+		try {
+			conn = new DBUtil().getConnection();
+			this.boardDao = new BoardDao();
+			conn.setAutoCommit(false);
+			list = boardDao.selectBoardOne(conn, boardNo);
+			
+			if(list==null) {
+				throw new Exception();
+			}
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return list;
 	}
 }
