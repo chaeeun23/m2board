@@ -5,7 +5,7 @@ public class Board {
 	private String title;
 	private String writer;
 	private String createDate;
-	private int read;
+	private int views;
 	private int nice;
 	public int getBoardNo() {
 		return boardNo;
@@ -31,11 +31,11 @@ public class Board {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public int getRead() {
-		return read;
+	public int getViews() {
+		return views;
 	}
-	public void setRead(int read) {
-		this.read = read;
+	public void setViews(int views) {
+		this.views = views;
 	}
 	public int getNice() {
 		return nice;
@@ -43,6 +43,7 @@ public class Board {
 	public void setNice(int nice) {
 		this.nice = nice;
 	}
+	
 	
 	
 }

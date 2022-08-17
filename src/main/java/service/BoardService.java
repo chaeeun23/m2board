@@ -20,9 +20,6 @@ public class BoardService implements IBoardService {
 		Map<String, Object> map = new HashMap<>();
 		List<Board> list = new ArrayList<>();
 		Connection conn = null;
-		int lastPage = 0;
-		int totalCount = 0;
-		int beginRow = 0;
 
 		try {
 			conn = new DBUtil().getConnection();
@@ -30,12 +27,12 @@ public class BoardService implements IBoardService {
 			conn.setAutoCommit(false);
 
 			// 페이징
-			totalCount = boardDao.selectBoardCnt(conn);
-			beginRow = (currentPage - 1) * rowPerPage;
+			int totalCount = boardDao.selectBoardCnt(conn,rowPerPage);
+			int beginRow = (currentPage - 1) * rowPerPage;
 			if (totalCount == 0) {
 				throw new Exception();
 			}
-			lastPage = totalCount / rowPerPage;
+			int lastPage = totalCount / rowPerPage;
 			if (totalCount % rowPerPage != 0) {
 				lastPage += 1;
 			}

@@ -7,6 +7,6 @@ import vo.Board;
 
 public interface IBoardDao {
 	List<Board> selectBoardListByPage(Connection conn, int rowPerPage, int beginRow) throws Exception;
-	int selectBoardCnt(Connection conn) throws Exception;
+	int selectBoardCnt(Connection conn, int rowPerPage) throws Exception;
 	
 }

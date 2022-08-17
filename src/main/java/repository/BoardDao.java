@@ -19,6 +19,8 @@ public class BoardDao implements IBoardDao {
 		ResultSet rs = null;
 		try {
 			stmt=conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, rowPerPage);
 			rs=stmt.executeQuery();
 			while(rs.next()) {
 				Board board = new Board();
@@ -26,7 +28,7 @@ public class BoardDao implements IBoardDao {
 				board.setTitle(rs.getString("title"));
 				board.setWriter(rs.getString("writer"));
 				board.setCreateDate(rs.getString("createDate"));
-				board.setRead(rs.getInt("read"));
+				board.setViews(rs.getInt("views"));
 				board.setNice(rs.getInt("nice"));
 				list.add(board);	
 			}
@@ -43,9 +45,8 @@ public class BoardDao implements IBoardDao {
 	}
 
 	@Override
-	public int selectBoardCnt(Connection conn) throws Exception {
-		int row=0;
-		int totalCount = 0;
+	public int selectBoardCnt(Connection conn, int rowPerPage) throws Exception {
+		int totalCount =0;
 		String sql = BoardQuery.SELECT_BOARD_CNT; //쿼리가져오기
 		PreparedStatement stmt=null;
 		ResultSet rs = null;
@@ -63,7 +64,7 @@ public class BoardDao implements IBoardDao {
 				stmt.close();
 			}
 		}
-		return row;
+		return totalCount;
 	}
 
 }
