@@ -3,11 +3,11 @@ package repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import vo.Board;
+import vo.Nice;
 
 public class BoardDao implements IBoardDao {
 	// 리스트
@@ -101,7 +101,7 @@ public class BoardDao implements IBoardDao {
 
 		return list;
 	}
-
+	//글쓰기
 	@Override
 	public int insertBoard(Connection conn, Board board) throws Exception {
 		int row = 0;
@@ -141,7 +141,7 @@ public class BoardDao implements IBoardDao {
 
 	// 좋아요
 	@Override
-	public int updateNice(Connection conn, int boardNo) throws Exception {
+	public int updateNice(Connection conn, Nice nice) throws Exception {
 		int row = 0;
 
 		String sql = BoardQuery.UPDATE_NICE;
@@ -149,7 +149,8 @@ public class BoardDao implements IBoardDao {
 
 		try {
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, boardNo);
+			stmt.setInt(1, nice.getBoardNo());
+			stmt.setString(2, nice.getMemberId());
 			row = stmt.executeUpdate();
 		} finally {
 			if (stmt != null) {

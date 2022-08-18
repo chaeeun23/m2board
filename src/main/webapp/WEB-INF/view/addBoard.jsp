@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>글쓰기</h1>
-	<form method="post" action="<%=request.getContextPath()%>/addBoard">
+	<form method="post" action="${pageContext.request.contextPath}/addBoard">
 		<table border="1">
 			<tr>
 				<td>제목</td>

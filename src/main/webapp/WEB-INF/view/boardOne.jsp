@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<th>
-					<a href="${pageContext.request.contextPath}/modifyNice?boardNo=${b.boardNo}">
+					<a href="${pageContext.request.contextPath}/modifyNice?boardNo=${b.boardNo}&views=${b.views}">
 						좋아요
 					</a>
 				</th>

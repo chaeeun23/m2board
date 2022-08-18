@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import vo.Board;
+import vo.Nice;
 
 public interface IBoardDao {
 	//상품리스트
@@ -17,5 +18,5 @@ public interface IBoardDao {
 	//조회수
 	int updateViewsCnt(Connection conn, int BoardNo) throws Exception;
 	//좋아요
-	int updateNice(Connection conn, int boardNo) throws Exception;
+	int updateNice(Connection conn, Nice nice) throws Exception;
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import vo.Board;
+import vo.Nice;
 
 public interface IBoardService {
 	// 반환값 : List<Board>, int lastPage
@@ -16,6 +17,6 @@ public interface IBoardService {
 	//조회수
 	int modifyViews(int views, int boardNo);
 	//좋아요
-	int modifyNice(int boardNo);
+	int modifyNice(Nice nice);
 	
 }

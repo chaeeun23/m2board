@@ -11,6 +11,7 @@ import commons.DBUtil;
 import repository.BoardDao;
 import repository.IBoardDao;
 import vo.Board;
+import vo.Nice;
 
 public class BoardService implements IBoardService {
 	private IBoardDao boardDao;
@@ -21,7 +22,6 @@ public class BoardService implements IBoardService {
 		Map<String, Object> map = new HashMap<>();
 		List<Board> list = new ArrayList<>();
 		int beginRow = (currentPage - 1) * rowPerPage;
-		int boardCnt = 0;
 		Connection conn = null;
 
 		try {
@@ -165,7 +165,7 @@ public class BoardService implements IBoardService {
 
 	// 좋아요
 	@Override
-	public int modifyNice(int boardNo) {
+	public int modifyNice(Nice nice) {
 		int row = 0;
 		Connection conn = null;
 
@@ -173,7 +173,7 @@ public class BoardService implements IBoardService {
 			conn = new DBUtil().getConnection();
 			conn.setAutoCommit(false);
 			boardDao = new BoardDao();
-			row = boardDao.updateNice(conn, boardNo);
+			row = boardDao.updateNice(conn,nice);
 			if (row == 0) {
 				throw new Exception();
 			}
