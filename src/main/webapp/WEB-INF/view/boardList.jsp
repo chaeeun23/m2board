@@ -14,11 +14,15 @@
 		<a href="${pageContext.request.contextPath}/addBoard"> 글쓰기 </a>
 	</div>
 
-	<table>
+	<table border="1">
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
+				<th>좋아요</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,8 +31,12 @@
 					<td>${b.boardNo}</td>
 					<!-- b.getBoardNo() -->
 					<td><a
-						href="${pageContext.request.contextPath}/boardOne?boardNo=${b.boardNo}">
+						href="${pageContext.request.contextPath}/boardOne?boardNo=${b.boardNo}&views=${b.views}">
 							${b.title} </a></td>
+							<td>${b.writer}</td>
+						<td>${b.createDate}</td>
+						<td>${b.views}</td>
+						<td>${b.nice}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

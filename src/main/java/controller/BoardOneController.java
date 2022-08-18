@@ -13,7 +13,7 @@ import service.BoardService;
 import service.IBoardService;
 import vo.Board;
 
-@WebServlet("/BoardOne")
+@WebServlet("/boardOne")
 public class BoardOneController extends HttpServlet {
 	private IBoardService boardService;
 
@@ -21,12 +21,15 @@ public class BoardOneController extends HttpServlet {
 			throws ServletException, IOException {
 		// 1. 요청을 받아 분석
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+		int views = Integer.parseInt(request.getParameter("views"));
+		//
 		System.out.print(boardNo);
 		// 2.
 		boardService = new BoardService();
 		List<Board> list = boardService.getBoardOne(boardNo);
-
+		System.out.println(list+"<--controller");
 		request.setAttribute("list", list);
+		boardService.modifyViews(views, boardNo);
 
 		// 3) 뷰 포워딩
 		request.getRequestDispatcher("/WEB-INF/view/boardOne.jsp").forward(request, response);

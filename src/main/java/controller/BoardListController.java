@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import service.BoardService;
 import service.IBoardService;
 
-@WebServlet("/BoardList")
+@WebServlet("/boardList")
 public class BoardListController extends HttpServlet {
 	private IBoardService boardService;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,6 +30,8 @@ public class BoardListController extends HttpServlet {
 		Map<String, Object> map = boardService.getBoardList(ROW_PER_PAGE, currentPage);
 		request.setAttribute("lastPage", map.get("lastPage"));
 		request.setAttribute("list", map.get("list"));
+		//
+		System.out.println(map.get("list") +"<-- listController");
 		request.setAttribute("currentPage", currentPage);
 		
 		//3) 뷰 포워딩

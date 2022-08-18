@@ -14,22 +14,23 @@ import vo.Board;
 
 public class BoardService implements IBoardService {
 	private IBoardDao boardDao;
-
 	// 리스트
 	@Override
 	public Map<String, Object> getBoardList(int rowPerPage, int currentPage) {
 		Map<String, Object> map = new HashMap<>();
 		List<Board> list = new ArrayList<>();
+		int beginRow = (currentPage - 1) * rowPerPage;
+		int boardCnt = 0;
 		Connection conn = null;
 
 		try {
 			conn = new DBUtil().getConnection();
-			this.boardDao = new BoardDao();
+			boardDao = new BoardDao();
 			conn.setAutoCommit(false);
-
+			
 			// 페이징
 			int totalCount = boardDao.selectBoardCnt(conn, rowPerPage);
-			int beginRow = (currentPage - 1) * rowPerPage;
+			
 			if (totalCount == 0) {
 				throw new Exception();
 			}
@@ -37,9 +38,10 @@ public class BoardService implements IBoardService {
 			if (totalCount % rowPerPage != 0) {
 				lastPage += 1;
 			}
-
+			
 			list = boardDao.selectBoardListByPage(conn, rowPerPage, beginRow);
-
+			//
+			System.out.println(list+"<--service");
 			if (list == null) {
 				throw new Exception();
 			} else {
@@ -55,10 +57,12 @@ public class BoardService implements IBoardService {
 				e1.printStackTrace();
 			}
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -71,10 +75,11 @@ public class BoardService implements IBoardService {
 		Connection conn = null;
 		try {
 			conn = new DBUtil().getConnection();
-			this.boardDao = new BoardDao();
+			boardDao = new BoardDao();
 			conn.setAutoCommit(false);
 			list = boardDao.selectBoardOne(conn, boardNo);
-			
+			//
+			System.out.println(list+"<--service");
 			if(list==null) {
 				throw new Exception();
 			}
@@ -87,13 +92,70 @@ public class BoardService implements IBoardService {
 				e1.printStackTrace();
 			}
 		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 
 		return list;
+	}
+	//글쓰기
+	@Override
+	public int  addBoard(Board board) {
+		int row = 0;
+		Connection conn=null;
+		try {
+			conn = new DBUtil().getConnection();
+			boardDao=new BoardDao();
+			row=boardDao.insertBoard(conn, board);
+			if(row==0) {
+				throw new Exception(); 
+			}
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return row;
+	}
+	//조회수
+	@Override
+	public int modifyViews(int views, int boardNo) {
+		int row =0 ;
+		Connection conn = null;
+		
+		try {
+			conn = new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			boardDao = new BoardDao();
+			
+			row=boardDao.updateViewsCnt(conn, boardNo);
+			if(row == 0) {
+				throw new Exception(); 
+			}
+			conn.commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return row;
 	}
 }

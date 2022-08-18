@@ -8,26 +8,30 @@
 </head>
 <body>
    <h1>상세보기</h1>
-		<table>
+    <div>
+      <a href="${pageContext.request.contextPath}/boardList">목록</a>
+   </div>
+		<table border="1">
+		<c:forEach var="b" items="${list}">
 			<tr>
 				<th>번호</th>
-				<td>${board.boardNo}</td>
+				<td>${b.boardNo}</td>
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td>${board.title}</td>
+				<td>${b.title}</td>
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<td>${board.writer}</td>
+				<td>${b.writer}</td>
 			</tr>
 			<tr>
 				<th>작성일</th>
-				<td>${board.createDate}</td>
+				<td>${b.createDate}</td>
 			</tr>
 			<tr>
 				<th>조회수</th>
-				<td>${board.views}</td>
+				<td>${b.views}</td>
 			</tr>
 			<tr>
 				<th>
@@ -35,8 +39,9 @@
 						좋아요
 					</a>
 				</th>
-				<td>${board.nice}</td>
+				<td>${b.nice}</td>
 			</tr>
+			</c:forEach>
 		</table>
 </body>
 </html>

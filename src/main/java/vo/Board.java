@@ -43,6 +43,11 @@ public class Board {
 	public void setNice(int nice) {
 		this.nice = nice;
 	}
+	@Override
+	public String toString() {
+		return "Board [boardNo=" + boardNo + ", title=" + title + ", writer=" + writer + ", createDate=" + createDate
+				+ ", views=" + views + ", nice=" + nice + "]";
+	}
 	
 	
 	
