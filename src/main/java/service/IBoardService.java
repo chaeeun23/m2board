@@ -15,5 +15,7 @@ public interface IBoardService {
 	int addBoard(Board board);
 	//조회수
 	int modifyViews(int views, int boardNo);
+	//좋아요
+	int modifyNice(int boardNo);
 	
 }

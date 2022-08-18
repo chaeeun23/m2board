@@ -16,4 +16,6 @@ public interface IBoardDao {
 	int insertBoard(Connection conn, Board board) throws Exception;
 	//조회수
 	int updateViewsCnt(Connection conn, int BoardNo) throws Exception;
+	//좋아요
+	int updateNice(Connection conn, int boardNo) throws Exception;
 }

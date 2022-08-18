@@ -139,4 +139,24 @@ public class BoardDao implements IBoardDao {
 		return row;
 	}
 
+	// 좋아요
+	@Override
+	public int updateNice(Connection conn, int boardNo) throws Exception {
+		int row = 0;
+
+		String sql = BoardQuery.UPDATE_NICE;
+		PreparedStatement stmt = null;
+
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, boardNo);
+			row = stmt.executeUpdate();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+
+		return row;
+	}
 }
