@@ -7,4 +7,5 @@ public class BoardQuery {
 	public static final String INSERT_BOARD="INSERT INTO board(title, writer, create_date) VALUES(?,?,NOW())";
 	public static final String UPDATE_VIEWS_CNT	="UPDATE board SET views = views + 1 WHERE board_no = ?";
 	public static final String UPDATE_NICE="INSERT INTO nice (board_no,member_id,create_date) VALUES(?,?,NOW())";			
+	public static final String UPDATE_PLUS_NICE="UPDATE board SET nice = nice + 1 WHERE board_no = ?";
 }

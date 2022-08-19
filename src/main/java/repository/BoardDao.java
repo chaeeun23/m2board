@@ -139,7 +139,7 @@ public class BoardDao implements IBoardDao {
 		return row;
 	}
 
-	// 좋아요
+	// 좋아요한 사람 인서트
 	@Override
 	public int updateNice(Connection conn, Nice nice) throws Exception {
 		int row = 0;
@@ -151,6 +151,27 @@ public class BoardDao implements IBoardDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, nice.getBoardNo());
 			stmt.setString(2, nice.getMemberId());
+			row = stmt.executeUpdate();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+
+		return row;
+	}
+
+	//좋아요
+	@Override
+	public int updatePlusNice(Connection conn, int boardNo) throws Exception {
+		int row=0;
+		
+		String sql = BoardQuery.UPDATE_PLUS_NICE;
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, boardNo);
 			row = stmt.executeUpdate();
 		} finally {
 			if (stmt != null) {

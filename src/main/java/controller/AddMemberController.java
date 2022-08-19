@@ -26,12 +26,16 @@ public class AddMemberController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
+		String addr = request.getParameter("addr");
+		String detailAddr = request.getParameter("detailAddr");
 		//
 		System.out.println(id+"<--controller/id");
 	
 		Member member = new Member();
 		member.setMemberId(id);
 		member.setMemberPw(pw);
+		member.setMemberAddress(addr);
+		member.setMemberDetailAddress(detailAddr);
 		
 		memberService = new MemberService();
 		memberService.addMember(member);

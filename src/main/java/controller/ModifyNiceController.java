@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import service.BoardService;
 import service.IBoardService;
+import vo.Board;
 import vo.Member;
 import vo.Nice;
 
@@ -22,6 +23,7 @@ public class ModifyNiceController extends HttpServlet {
 			throws ServletException, IOException {
 		boardService = new BoardService();
 		Member member = new Member();
+		Board board = new Board();
 		Nice nice = new Nice();
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginMember") == null) { 
@@ -31,7 +33,7 @@ public class ModifyNiceController extends HttpServlet {
 		
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		int views = Integer.parseInt(request.getParameter("views"));
-//
+		//
 		System.out.println(boardNo+" <--controller/boardNo");
 		
 		member = (Member)session.getAttribute("loginMember");
@@ -41,7 +43,10 @@ public class ModifyNiceController extends HttpServlet {
 		
 		nice.setMemberId(memberId);
 		nice.setBoardNo(boardNo);
-		this.boardService.modifyNice(nice);
+		board.setBoardNo(boardNo);
+		
+		this.boardService.modifyNice(nice); //좋아요한 사람 인서트
+		this.boardService.modifyPlusNice(boardNo); //좋아요 수 늘리기
 		
 		response.sendRedirect(request.getContextPath() + "/boardOne?boardNo="+boardNo+"&views="+views);
 	}

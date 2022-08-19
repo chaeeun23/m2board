@@ -163,7 +163,7 @@ public class BoardService implements IBoardService {
 		return row;
 	}
 
-	// 좋아요
+	// 좋아요한 사람 인서트
 	@Override
 	public int modifyNice(Nice nice) {
 		int row = 0;
@@ -192,4 +192,34 @@ public class BoardService implements IBoardService {
 		}
 		return row;
 	}
+
+	// 좋아요 수 
+	@Override
+	public int modifyPlusNice(int boardNo) {
+		int row=0;
+		Connection conn = null;
+		
+		try {
+			conn=new DBUtil().getConnection();
+			conn.setAutoCommit(false);
+			boardDao = new BoardDao();
+			row=boardDao.updatePlusNice(conn,boardNo);
+			if(row==0) {
+				throw new Exception();
+			}
+			conn.commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return row;
+	}
+	
 }

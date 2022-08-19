@@ -53,6 +53,8 @@ public class MemberDao implements IMemberDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1,paramMember.getMemberId());
 			stmt.setString(2,paramMember.getMemberPw());
+			stmt.setString(3, paramMember.getMemberAddress());
+			stmt.setString(4, paramMember.getMemberDetailAddress());
 			row =stmt.executeUpdate();
 				
 		}finally {
